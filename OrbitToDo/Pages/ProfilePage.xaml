@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OrbitToDo.ProfilePage"
+             Title="Profile"
+             BackgroundColor="{StaticResource SpaceBg}">
+
+    <VerticalStackLayout
+        VerticalOptions="Center"
+        HorizontalOptions="Center"
+        Spacing="16"
+        Padding="32">
+
+        <!-- Avatar -->
+        <Border
+            BackgroundColor="{StaticResource CardBg}"
+            Stroke="{StaticResource NebulaPurple}"
+            StrokeThickness="2"
+            WidthRequest="120"
+            HeightRequest="120"
+            HorizontalOptions="Center">
+            <Border.StrokeShape>
+                <Ellipse/>
+            </Border.StrokeShape>
+            <Label
+                Text="🧑‍🚀"
+                FontSize="56"
+                HorizontalOptions="Center"
+                VerticalOptions="Center"/>
+        </Border>
+
+        <!-- Username -->
+        <Label
+            x:Name="UsernameLabel"
+            Text="Astronaut"
+            FontFamily="Orbitron"
+            FontSize="18"
+            FontAttributes="Bold"
+            TextColor="{StaticResource StarWhite}"
+            HorizontalTextAlignment="Center"
+            CharacterSpacing="1"/>
+
+        <!-- Email -->
+        <Label
+            x:Name="EmailLabel"
+            Text="user@orbit.space"
+            FontFamily="Exo2"
+            FontSize="13"
+            TextColor="{StaticResource DimStar}"
+            HorizontalTextAlignment="Center"
+            Margin="0,-8,0,0"/>
+
+        <!-- Sign Out Button -->
+        <Button
+            Text="Sign Out"
+            Style="{StaticResource GrayButton}"
+            WidthRequest="220"
+            HorizontalOptions="Center"
+            Clicked="OnSignOutClicked"
+            Margin="0,12,0,0"/>
+
+    </VerticalStackLayout>
+
+</ContentPage>

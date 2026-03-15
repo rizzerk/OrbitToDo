@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OrbitToDo.EditCompletedPage"
+             Title="Edit"
+             BackgroundColor="{StaticResource SpaceBg}">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView Grid.Row="0">
+            <VerticalStackLayout Padding="16,16,16,0" Spacing="4">
+
+                <!-- Title Entry -->
+                <Border
+                    BackgroundColor="{StaticResource InputBg}"
+                    Stroke="{StaticResource CardBorder}"
+                    StrokeThickness="1"
+                    Padding="4,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Entry
+                        x:Name="TitleEntry"
+                        Style="{StaticResource SpaceEntry}"
+                        Placeholder="Title"
+                        Keyboard="Default"
+                        ReturnType="Next"/>
+                </Border>
+
+                <!-- Details Editor -->
+                <Border
+                    BackgroundColor="{StaticResource InputBg}"
+                    Stroke="{StaticResource CardBorder}"
+                    StrokeThickness="1"
+                    Padding="4,4"
+                    Margin="0,4,0,0">
+                    <Border.StrokeShape>
+                        <RoundRectangle CornerRadius="10"/>
+                    </Border.StrokeShape>
+                    <Editor
+                        x:Name="DetailsEditor"
+                        Style="{StaticResource SpaceEditor}"
+                        Placeholder="Details"
+                        AutoSize="TextChanges"/>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Action Buttons pinned to bottom -->
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,24" Spacing="0">
+            <Button
+                Text="Update"
+                Style="{StaticResource PrimaryButton}"
+                Clicked="OnUpdateClicked"/>
+            <Button
+                Text="Incomplete"
+                Style="{StaticResource GrayButton}"
+                Clicked="OnIncompleteClicked"/>
+            <Button
+                Text="Delete"
+                Style="{StaticResource DangerButton}"
+                Clicked="OnDeleteClicked"/>
+        </VerticalStackLayout>
+
+    </Grid>
+
+</ContentPage>

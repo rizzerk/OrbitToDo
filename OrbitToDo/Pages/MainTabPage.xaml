@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="OrbitToDo.MainTabPage"
+            Title="Orbit"
+            BackgroundColor="{StaticResource SpaceBg}"
+            BarBackgroundColor="{StaticResource SpaceDeep}"
+            BarTextColor="{StaticResource DimStar}"
+            SelectedTabColor="{StaticResource NebulaBlue}"
+            UnselectedTabColor="{StaticResource DimStar}">
+
+    <NavigationPage Title="ToDo" IconImageSource="tab_todo.png">
+        <x:Arguments>
+            <local:ToDoPage xmlns:local="clr-namespace:OrbitToDo"/>
+        </x:Arguments>
+    </NavigationPage>
+
+    <NavigationPage Title="Completed" IconImageSource="tab_completed.png">
+        <x:Arguments>
+            <local:CompletedPage xmlns:local="clr-namespace:OrbitToDo"/>
+        </x:Arguments>
+    </NavigationPage>
+
+    <NavigationPage Title="Profile" IconImageSource="tab_profile.png">
+        <x:Arguments>
+            <local:ProfilePage xmlns:local="clr-namespace:OrbitToDo"/>
+        </x:Arguments>
+    </NavigationPage>
+
+</TabbedPage>

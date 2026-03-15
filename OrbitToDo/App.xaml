@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OrbitToDo.App">
+    <Application.Resources>
+        <ResourceDictionary>
+
+            <!-- Space Theme Colors -->
+            <Color x:Key="SpaceBg">#0A0A1A</Color>
+            <Color x:Key="SpaceDeep">#060610</Color>
+            <Color x:Key="NebulaPurple">#7B4FA6</Color>
+            <Color x:Key="NebulaBlue">#3A7BD5</Color>
+            <Color x:Key="StarWhite">#E8EAF6</Color>
+            <Color x:Key="DimStar">#8892B0</Color>
+            <Color x:Key="CardBg">#121228</Color>
+            <Color x:Key="InputBg">#0F0F22</Color>
+            <Color x:Key="CompleteGreen">#4CAF82</Color>
+            <Color x:Key="DeletePink">#E57373</Color>
+            <Color x:Key="IncompleteGray">#78909C</Color>
+            <Color x:Key="CardBorder">#2A1A3E</Color>
+
+            <!-- Base Button Style -->
+            <Style x:Key="BaseButton" TargetType="Button">
+                <Setter Property="FontFamily" Value="Exo2"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HeightRequest" Value="48"/>
+                <Setter Property="TextColor" Value="{StaticResource StarWhite}"/>
+                <Setter Property="Margin" Value="0,4,0,4"/>
+            </Style>
+
+            <!-- Primary Button -->
+            <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="BackgroundColor" Value="{StaticResource NebulaPurple}"/>
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+
+            <!-- Secondary Button -->
+            <Style x:Key="SecondaryButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="BackgroundColor" Value="{StaticResource CardBg}"/>
+                <Setter Property="TextColor" Value="{StaticResource DimStar}"/>
+                <Setter Property="BorderColor" Value="{StaticResource NebulaPurple}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+            </Style>
+
+            <!-- Success Button -->
+            <Style x:Key="SuccessButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="BackgroundColor" Value="#1A3D2E"/>
+                <Setter Property="TextColor" Value="{StaticResource CompleteGreen}"/>
+                <Setter Property="BorderColor" Value="{StaticResource CompleteGreen}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+            </Style>
+
+            <!-- Danger Button -->
+            <Style x:Key="DangerButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="BackgroundColor" Value="#3D1A1A"/>
+                <Setter Property="TextColor" Value="{StaticResource DeletePink}"/>
+                <Setter Property="BorderColor" Value="{StaticResource DeletePink}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+            </Style>
+
+            <!-- Gray Button -->
+            <Style x:Key="GrayButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="BackgroundColor" Value="#1E2A30"/>
+                <Setter Property="TextColor" Value="{StaticResource IncompleteGray}"/>
+                <Setter Property="BorderColor" Value="{StaticResource IncompleteGray}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+            </Style>
+
+            <!-- Input Entry Style -->
+            <Style x:Key="SpaceEntry" TargetType="Entry">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBg}"/>
+                <Setter Property="TextColor" Value="{StaticResource StarWhite}"/>
+                <Setter Property="PlaceholderColor" Value="{StaticResource DimStar}"/>
+                <Setter Property="FontFamily" Value="Exo2"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HeightRequest" Value="48"/>
+                <Setter Property="Margin" Value="0,4,0,4"/>
+            </Style>
+
+            <!-- Editor Style -->
+            <Style x:Key="SpaceEditor" TargetType="Editor">
+                <Setter Property="BackgroundColor" Value="{StaticResource InputBg}"/>
+                <Setter Property="TextColor" Value="{StaticResource StarWhite}"/>
+                <Setter Property="PlaceholderColor" Value="{StaticResource DimStar}"/>
+                <Setter Property="FontFamily" Value="Exo2"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="HeightRequest" Value="120"/>
+                <Setter Property="Margin" Value="0,4,0,4"/>
+            </Style>
+
+            <!-- Page Title Label -->
+            <Style x:Key="PageTitle" TargetType="Label">
+                <Setter Property="FontFamily" Value="Orbitron"/>
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TextColor" Value="{StaticResource DimStar}"/>
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <Setter Property="CharacterSpacing" Value="3"/>
+            </Style>
+
+            <!-- Section Label -->
+            <Style x:Key="SectionLabel" TargetType="Label">
+                <Setter Property="FontFamily" Value="Orbitron"/>
+                <Setter Property="FontSize" Value="10"/>
+                <Setter Property="TextColor" Value="{StaticResource DimStar}"/>
+                <Setter Property="CharacterSpacing" Value="2"/>
+                <Setter Property="Opacity" Value="0.7"/>
+                <Setter Property="Margin" Value="0,0,0,8"/>
+            </Style>
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

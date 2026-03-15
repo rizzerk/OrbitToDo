@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OrbitToDo.CompletedPage"
+             Title="Completed"
+             BackgroundColor="{StaticResource SpaceBg}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Padding="16,12,16,10">
+            <Label
+                Text="COMPLETED MISSIONS"
+                Style="{StaticResource SectionLabel}"/>
+        </VerticalStackLayout>
+
+        <!-- ListView -->
+        <ListView
+            x:Name="CompletedListView"
+            Grid.Row="1"
+            BackgroundColor="Transparent"
+            SeparatorVisibility="None"
+            HasUnevenRows="True"
+            ItemSelected="OnItemSelected"
+            Margin="16,0,16,0">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Border
+                            BackgroundColor="{StaticResource CardBg}"
+                            Stroke="{StaticResource CardBorder}"
+                            StrokeThickness="1"
+                            Padding="14,12"
+                            Margin="0,0,0,8">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10"/>
+                            </Border.StrokeShape>
+                            <Grid ColumnDefinitions="*,Auto">
+
+                                <!-- Task Name (green for completed) -->
+                                <Label
+                                    Grid.Column="0"
+                                    Text="{Binding item_name}"
+                                    FontFamily="Exo2"
+                                    FontSize="14"
+                                    TextColor="{StaticResource CompleteGreen}"
+                                    VerticalOptions="Center"/>
+
+                                <!-- Delete Icon -->
+                                <Label
+                                    Grid.Column="1"
+                                    Text="🗑️"
+                                    FontSize="16"
+                                    VerticalOptions="Center"
+                                    Margin="8,0,4,0">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            CommandParameter="{Binding .}"
+                                            Tapped="OnDeleteTapped"/>
+                                    </Label.GestureRecognizers>
+                                </Label>
+
+                            </Grid>
+                        </Border>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+
+</ContentPage>

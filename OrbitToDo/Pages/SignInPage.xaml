@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="OrbitToDo.SignInPage"
+             Title=""
+             BackgroundColor="{StaticResource SpaceBg}"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="32,60,32,40"
+            Spacing="12"
+            VerticalOptions="Center">
+
+            <!-- Logo / App Icon -->
+            <Border
+                BackgroundColor="{StaticResource CardBg}"
+                StrokeThickness="1"
+                Stroke="{StaticResource NebulaPurple}"
+                HeightRequest="110"
+                WidthRequest="140"
+                HorizontalOptions="Center"
+                Margin="0,0,0,8">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="16"/>
+                </Border.StrokeShape>
+                <Label
+                    Text="🪐"
+                    FontSize="56"
+                    HorizontalOptions="Center"
+                    VerticalOptions="Center"/>
+            </Border>
+
+            <!-- App Name -->
+            <Label
+                Text="ORBIT"
+                FontFamily="Orbitron"
+                FontSize="28"
+                FontAttributes="Bold"
+                TextColor="{StaticResource StarWhite}"
+                HorizontalTextAlignment="Center"
+                CharacterSpacing="4"/>
+
+            <Label
+                Text="TO DO APP"
+                FontFamily="Orbitron"
+                FontSize="11"
+                TextColor="{StaticResource DimStar}"
+                HorizontalTextAlignment="Center"
+                CharacterSpacing="5"
+                Margin="0,-6,0,16"/>
+
+            <!-- Email Entry -->
+            <Border
+                BackgroundColor="{StaticResource InputBg}"
+                Stroke="{StaticResource CardBorder}"
+                StrokeThickness="1"
+                Padding="4,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="EmailEntry"
+                    Style="{StaticResource SpaceEntry}"
+                    Placeholder="Email address"
+                    Keyboard="Email"
+                    ReturnType="Next"/>
+            </Border>
+
+            <!-- Password Entry -->
+            <Border
+                BackgroundColor="{StaticResource InputBg}"
+                Stroke="{StaticResource CardBorder}"
+                StrokeThickness="1"
+                Padding="4,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="PasswordEntry"
+                    Style="{StaticResource SpaceEntry}"
+                    Placeholder="Password"
+                    IsPassword="True"
+                    ReturnType="Done"
+                    ReturnCommand="{Binding SignInCommand}"/>
+            </Border>
+
+            <!-- Sign In Button -->
+            <Button
+                Text="Sign In"
+                Style="{StaticResource PrimaryButton}"
+                Clicked="OnSignInClicked"
+                Margin="0,8,0,0"/>
+
+            <!-- Sign Up Button -->
+            <Button
+                Text="Sign Up"
+                Style="{StaticResource SecondaryButton}"
+                Clicked="OnSignUpClicked"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

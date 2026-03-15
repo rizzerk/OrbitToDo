@@ -1,0 +1,1 @@
+-v --force --timestamp=none --sign - /Users/razelkayearenas/RiderProjects/OrbitToDo/OrbitToDo/bin/Debug/net10.0-ios/iossimulator-arm64/OrbitToDo.app/libSystem.IO.Compression.Native.dylib
