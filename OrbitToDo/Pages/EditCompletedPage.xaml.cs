@@ -8,40 +8,83 @@ public partial class EditCompletedPage : ContentPage
     {
         InitializeComponent();
         _todoItem = item;
-        TitleEntry.Text = item.item_name;
+        TitleEntry.Text    = item.item_name;
         DetailsEditor.Text = item.item_description;
     }
 
     private async void OnUpdateClicked(object sender, EventArgs e)
     {
-        string title = TitleEntry.Text?.Trim();
+        string title   = TitleEntry.Text?.Trim();
+        string details = DetailsEditor.Text?.Trim() ?? string.Empty;
+
         if (string.IsNullOrWhiteSpace(title))
         {
             await DisplayAlert("⚠️ Required", "Title cannot be empty.", "OK");
             return;
         }
 
-        _todoItem.item_name = title;
-        _todoItem.item_description = DetailsEditor.Text?.Trim() ?? string.Empty;
+        SetLoading(true);
 
-        await DisplayAlert("✅ Updated", "Mission updated successfully.", "OK");
-        await Navigation.PopAsync();
+        // PUT /editItem_action.php
+        var result = await ApiService.UpdateItemAsync(_todoItem.item_id, title, details);
+
+        SetLoading(false);
+
+        if (result.Success)
+        {
+            await DisplayAlert("✅ Updated", "Mission updated successfully.", "OK");
+            await Navigation.PopAsync();
+        }
+        else
+        {
+            await DisplayAlert("Error", result.Message, "OK");
+        }
     }
 
     private async void OnIncompleteClicked(object sender, EventArgs e)
     {
-        _todoItem.status = "todo";
-        await DisplayAlert("🔄 Moved", $"\"{_todoItem.item_name}\" moved back to active missions.", "OK");
-        await Navigation.PopAsync();
+        SetLoading(true);
+
+        // PUT /statusItem_action.php  { status: "active", item_id: ... }
+        var result = await ApiService.ChangeStatusAsync(_todoItem.item_id, "active");
+
+        SetLoading(false);
+
+        if (result.Success)
+        {
+            await DisplayAlert("🔄 Moved", $"\"{_todoItem.item_name}\" moved back to active missions.", "OK");
+            await Navigation.PopAsync();
+        }
+        else
+        {
+            await DisplayAlert("Error", result.Message, "OK");
+        }
     }
 
     private async void OnDeleteClicked(object sender, EventArgs e)
     {
         bool confirm = await DisplayAlert("🗑️ Delete", $"Delete \"{_todoItem.item_name}\"?", "Yes", "No");
-        if (confirm)
-        {
-            AppSession.TodoList.Remove(_todoItem);
+        if (!confirm) return;
+
+        SetLoading(true);
+
+        // DELETE /deleteItem_action.php?item_id=...
+        var result = await ApiService.DeleteItemAsync(_todoItem.item_id);
+
+        SetLoading(false);
+
+        if (result.Success)
             await Navigation.PopAsync();
-        }
+        else
+            await DisplayAlert("Error", result.Message, "OK");
+    }
+
+    private void SetLoading(bool isLoading)
+    {
+        LoadingIndicator.IsRunning  = isLoading;
+        LoadingIndicator.IsVisible  = isLoading;
+        UpdateButton.IsEnabled      = !isLoading;
+        IncompleteButton.IsEnabled  = !isLoading;
+        DeleteButton.IsEnabled      = !isLoading;
     }
 }

@@ -12,8 +12,8 @@ public partial class ProfilePage : ContentPage
         base.OnAppearing();
         if (AppSession.CurrentUser != null)
         {
-            UsernameLabel.Text = AppSession.CurrentUser.username;
-            EmailLabel.Text = AppSession.CurrentUser.email;
+            UsernameLabel.Text = $"{AppSession.CurrentUser.fname} {AppSession.CurrentUser.lname}";
+            EmailLabel.Text    = AppSession.CurrentUser.email;
         }
     }
 
@@ -23,12 +23,11 @@ public partial class ProfilePage : ContentPage
         if (confirm)
         {
             AppSession.CurrentUser = null;
-            AppSession.TodoList.Clear();
 
             Application.Current.MainPage = new NavigationPage(new SignInPage())
             {
                 BarBackgroundColor = Color.FromArgb("#060610"),
-                BarTextColor = Color.FromArgb("#8892B0")
+                BarTextColor       = Color.FromArgb("#8892B0")
             };
         }
     }

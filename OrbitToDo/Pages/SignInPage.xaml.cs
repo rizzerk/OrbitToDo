@@ -9,9 +9,10 @@ public partial class SignInPage : ContentPage
 
     private async void OnSignInClicked(object sender, EventArgs e)
     {
-        string email = EmailEntry.Text?.Trim();
+        string email    = EmailEntry.Text?.Trim();
         string password = PasswordEntry.Text;
 
+        // Basic local validation first
         if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
         {
             await DisplayAlert("⚠️ Hold On", "Please fill in all fields.", "OK");
@@ -24,33 +25,41 @@ public partial class SignInPage : ContentPage
             return;
         }
 
-        // Check registered users or allow any credentials (demo mode)
-        var user = AppSession.RegisteredUsers.Find(u => u.email == email && u.password == password);
+        // Show loading
+        SetLoading(true);
 
-        if (user == null)
+        // Call API: GET /signin_action.php?email=...&password=...
+        var result = await ApiService.SignInAsync(email, password);
+
+        SetLoading(false);
+
+        if (result.Success)
         {
-            // Demo: create a session user if not registered
-            user = new UserClass
+            // Store user in session
+            AppSession.CurrentUser = result.Data;
+
+            // Navigate to main tab page
+            Application.Current.MainPage = new NavigationPage(new MainTabPage())
             {
-                user_id = AppSession.GetNextUserId(),
-                username = email.Split('@')[0],
-                email = email,
-                password = password
+                BarBackgroundColor = Color.FromArgb("#060610"),
+                BarTextColor       = Color.FromArgb("#8892B0")
             };
         }
-
-        AppSession.CurrentUser = user;
-
-        // Navigate to main tab page
-        Application.Current.MainPage = new NavigationPage(new MainTabPage())
+        else
         {
-            BarBackgroundColor = Color.FromArgb("#060610"),
-            BarTextColor = Color.FromArgb("#8892B0")
-        };
+            await DisplayAlert("🚫 Sign In Failed", result.Message, "OK");
+        }
     }
 
     private async void OnSignUpClicked(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new SignUpPage());
+    }
+
+    private void SetLoading(bool isLoading)
+    {
+        LoadingIndicator.IsRunning  = isLoading;
+        LoadingIndicator.IsVisible  = isLoading;
+        SignInButton.IsEnabled      = !isLoading;
     }
 }

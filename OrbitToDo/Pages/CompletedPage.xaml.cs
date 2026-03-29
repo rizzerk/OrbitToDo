@@ -4,27 +4,29 @@ namespace OrbitToDo;
 
 public partial class CompletedPage : ContentPage
 {
-    private ObservableCollection<ToDoClass> _completedTodos;
+    private ObservableCollection<ToDoClass> _completedTodos = new();
 
     public CompletedPage()
     {
         InitializeComponent();
-        _completedTodos = new ObservableCollection<ToDoClass>();
         CompletedListView.ItemsSource = _completedTodos;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        RefreshList();
+        await RefreshListAsync();
     }
 
-    private void RefreshList()
+    public async Task RefreshListAsync()
     {
+        // GET /getItems_action.php?status=inactive&user_id=...
+        var result = await ApiService.GetItemsAsync("inactive", AppSession.CurrentUser.id);
+
         _completedTodos.Clear();
-        foreach (var item in AppSession.TodoList)
+        if (result.Success && result.Data != null)
         {
-            if (item.status == "completed")
+            foreach (var item in result.Data)
                 _completedTodos.Add(item);
         }
     }
@@ -43,11 +45,14 @@ public partial class CompletedPage : ContentPage
         if (e.Parameter is ToDoClass item)
         {
             bool confirm = await DisplayAlert("🗑️ Delete", $"Delete \"{item.item_name}\"?", "Yes", "No");
-            if (confirm)
-            {
-                AppSession.TodoList.Remove(item);
-                RefreshList();
-            }
+            if (!confirm) return;
+
+            // DELETE /deleteItem_action.php?item_id=...
+            var result = await ApiService.DeleteItemAsync(item.item_id);
+            if (result.Success)
+                await RefreshListAsync();
+            else
+                await DisplayAlert("Error", result.Message, "OK");
         }
     }
 }

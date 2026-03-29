@@ -4,27 +4,29 @@ namespace OrbitToDo;
 
 public partial class ToDoPage : ContentPage
 {
-    private ObservableCollection<ToDoClass> _activeTodos;
+    private ObservableCollection<ToDoClass> _activeTodos = new();
 
     public ToDoPage()
     {
         InitializeComponent();
-        _activeTodos = new ObservableCollection<ToDoClass>();
         TodoListView.ItemsSource = _activeTodos;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        RefreshList();
+        await RefreshListAsync();
     }
 
-    private void RefreshList()
+    public async Task RefreshListAsync()
     {
+        // GET /getItems_action.php?status=active&user_id=...
+        var result = await ApiService.GetItemsAsync("active", AppSession.CurrentUser.id);
+
         _activeTodos.Clear();
-        foreach (var item in AppSession.TodoList)
+        if (result.Success && result.Data != null)
         {
-            if (item.status == "todo")
+            foreach (var item in result.Data)
                 _activeTodos.Add(item);
         }
     }
@@ -48,11 +50,14 @@ public partial class ToDoPage : ContentPage
         if (e.Parameter is ToDoClass item)
         {
             bool confirm = await DisplayAlert("🗑️ Delete", $"Delete \"{item.item_name}\"?", "Yes", "No");
-            if (confirm)
-            {
-                AppSession.TodoList.Remove(item);
-                RefreshList();
-            }
+            if (!confirm) return;
+
+            // DELETE /deleteItem_action.php?item_id=...
+            var result = await ApiService.DeleteItemAsync(item.item_id);
+            if (result.Success)
+                await RefreshListAsync();
+            else
+                await DisplayAlert("Error", result.Message, "OK");
         }
     }
 
@@ -60,9 +65,17 @@ public partial class ToDoPage : ContentPage
     {
         if (e.Parameter is ToDoClass item)
         {
-            item.status = "completed";
-            RefreshList();
-            await DisplayAlert("✨ Done!", $"\"{item.item_name}\" marked as complete.", "OK");
+            // PUT /statusItem_action.php  { status: "inactive", item_id: ... }
+            var result = await ApiService.ChangeStatusAsync(item.item_id, "inactive");
+            if (result.Success)
+            {
+                await RefreshListAsync();
+                await DisplayAlert("✨ Done!", $"\"{item.item_name}\" marked as complete.", "OK");
+            }
+            else
+            {
+                await DisplayAlert("Error", result.Message, "OK");
+            }
         }
     }
 }

@@ -9,14 +9,17 @@ public partial class SignUpPage : ContentPage
 
     private async void OnSignUpClicked(object sender, EventArgs e)
     {
-        string username = UsernameEntry.Text?.Trim();
-        string email = EmailEntry.Text?.Trim();
-        string password = PasswordEntry.Text;
-        string confirm = ConfirmPasswordEntry.Text;
+        string firstName = FirstNameEntry.Text?.Trim();
+        string lastName  = LastNameEntry.Text?.Trim();
+        string email     = EmailEntry.Text?.Trim();
+        string password  = PasswordEntry.Text;
+        string confirm   = ConfirmPasswordEntry.Text;
 
-        if (string.IsNullOrWhiteSpace(username) ||
-            string.IsNullOrWhiteSpace(email) ||
-            string.IsNullOrWhiteSpace(password) ||
+        // Local validation
+        if (string.IsNullOrWhiteSpace(firstName) ||
+            string.IsNullOrWhiteSpace(lastName)  ||
+            string.IsNullOrWhiteSpace(email)     ||
+            string.IsNullOrWhiteSpace(password)  ||
             string.IsNullOrWhiteSpace(confirm))
         {
             await DisplayAlert("⚠️ Hold On", "Please fill in all fields.", "OK");
@@ -35,28 +38,34 @@ public partial class SignUpPage : ContentPage
             return;
         }
 
-        if (AppSession.RegisteredUsers.Exists(u => u.email == email))
+        // Show loading
+        SetLoading(true);
+
+        // Call API: POST /signup_action.php
+        var result = await ApiService.SignUpAsync(firstName, lastName, email, password, confirm);
+
+        SetLoading(false);
+
+        if (result.Success)
         {
-            await DisplayAlert("⚠️ Already Registered", "This email is already in use.", "OK");
-            return;
+            await DisplayAlert("🚀 Account Created!", result.Message + "\nYou can now sign in.", "OK");
+            await Navigation.PopAsync();
         }
-
-        var newUser = new UserClass
+        else
         {
-            user_id = AppSession.GetNextUserId(),
-            username = username,
-            email = email,
-            password = password
-        };
-
-        AppSession.RegisteredUsers.Add(newUser);
-
-        await DisplayAlert("🚀 Account Created!", "You can now sign in.", "OK");
-        await Navigation.PopAsync();
+            await DisplayAlert("🚫 Sign Up Failed", result.Message, "OK");
+        }
     }
 
     private async void OnSignInClicked(object sender, EventArgs e)
     {
         await Navigation.PopAsync();
+    }
+
+    private void SetLoading(bool isLoading)
+    {
+        LoadingIndicator.IsRunning = isLoading;
+        LoadingIndicator.IsVisible = isLoading;
+        SignUpButton.IsEnabled     = !isLoading;
     }
 }

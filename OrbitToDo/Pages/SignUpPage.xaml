@@ -8,7 +8,7 @@
 
     <ScrollView>
         <VerticalStackLayout
-            Padding="32,60,32,40"
+            Padding="32,50,32,40"
             Spacing="12"
             VerticalOptions="Center">
 
@@ -47,9 +47,9 @@
                 TextColor="{StaticResource DimStar}"
                 HorizontalTextAlignment="Center"
                 CharacterSpacing="5"
-                Margin="0,-6,0,16"/>
+                Margin="0,-6,0,12"/>
 
-            <!-- Username -->
+            <!-- First Name -->
             <Border
                 BackgroundColor="{StaticResource InputBg}"
                 Stroke="{StaticResource CardBorder}"
@@ -59,9 +59,26 @@
                     <RoundRectangle CornerRadius="10"/>
                 </Border.StrokeShape>
                 <Entry
-                    x:Name="UsernameEntry"
+                    x:Name="FirstNameEntry"
                     Style="{StaticResource SpaceEntry}"
-                    Placeholder="User name"
+                    Placeholder="First name"
+                    Keyboard="Default"
+                    ReturnType="Next"/>
+            </Border>
+
+            <!-- Last Name -->
+            <Border
+                BackgroundColor="{StaticResource InputBg}"
+                Stroke="{StaticResource CardBorder}"
+                StrokeThickness="1"
+                Padding="4,0">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10"/>
+                </Border.StrokeShape>
+                <Entry
+                    x:Name="LastNameEntry"
+                    Style="{StaticResource SpaceEntry}"
+                    Placeholder="Last name"
                     Keyboard="Default"
                     ReturnType="Next"/>
             </Border>
@@ -117,8 +134,17 @@
                     ReturnType="Done"/>
             </Border>
 
+            <!-- Loading indicator -->
+            <ActivityIndicator
+                x:Name="LoadingIndicator"
+                IsRunning="False"
+                IsVisible="False"
+                Color="{StaticResource NebulaPurple}"
+                HorizontalOptions="Center"/>
+
             <!-- Sign Up Button -->
             <Button
+                x:Name="SignUpButton"
                 Text="Sign Up"
                 Style="{StaticResource PrimaryButton}"
                 Clicked="OnSignUpClicked"

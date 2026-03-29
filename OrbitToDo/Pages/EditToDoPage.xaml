@@ -10,7 +10,6 @@
         <ScrollView Grid.Row="0">
             <VerticalStackLayout Padding="16,16,16,0" Spacing="4">
 
-                <!-- Title Entry -->
                 <Border
                     BackgroundColor="{StaticResource InputBg}"
                     Stroke="{StaticResource CardBorder}"
@@ -27,7 +26,6 @@
                         ReturnType="Next"/>
                 </Border>
 
-                <!-- Details Editor -->
                 <Border
                     BackgroundColor="{StaticResource InputBg}"
                     Stroke="{StaticResource CardBorder}"
@@ -47,17 +45,26 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Action Buttons pinned to bottom -->
         <VerticalStackLayout Grid.Row="1" Padding="16,8,16,24" Spacing="0">
+            <ActivityIndicator
+                x:Name="LoadingIndicator"
+                IsRunning="False"
+                IsVisible="False"
+                Color="{StaticResource NebulaPurple}"
+                HorizontalOptions="Center"
+                Margin="0,0,0,6"/>
             <Button
+                x:Name="UpdateButton"
                 Text="Update"
                 Style="{StaticResource PrimaryButton}"
                 Clicked="OnUpdateClicked"/>
             <Button
+                x:Name="CompleteButton"
                 Text="Complete"
                 Style="{StaticResource SuccessButton}"
                 Clicked="OnCompleteClicked"/>
             <Button
+                x:Name="DeleteButton"
                 Text="Delete"
                 Style="{StaticResource DangerButton}"
                 Clicked="OnDeleteClicked"/>

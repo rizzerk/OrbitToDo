@@ -9,8 +9,8 @@ public partial class AddToDoPage : ContentPage
 
     private async void OnAddClicked(object sender, EventArgs e)
     {
-        string title = TitleEntry.Text?.Trim();
-        string details = DetailsEditor.Text?.Trim();
+        string title   = TitleEntry.Text?.Trim();
+        string details = DetailsEditor.Text?.Trim() ?? string.Empty;
 
         if (string.IsNullOrWhiteSpace(title))
         {
@@ -18,18 +18,28 @@ public partial class AddToDoPage : ContentPage
             return;
         }
 
-        var newTodo = new ToDoClass
+        SetLoading(true);
+
+        // POST /addItem_action.php
+        var result = await ApiService.AddItemAsync(title, details, AppSession.CurrentUser.id);
+
+        SetLoading(false);
+
+        if (result.Success)
         {
-            item_id = AppSession.GetNextId(),
-            item_name = title,
-            item_description = details ?? string.Empty,
-            status = "todo",
-            user_id = AppSession.CurrentUser?.user_id ?? 1
-        };
+            await DisplayAlert("🚀 Added!", $"\"{title}\" added to your missions.", "OK");
+            await Navigation.PopAsync();
+        }
+        else
+        {
+            await DisplayAlert("Error", result.Message, "OK");
+        }
+    }
 
-        AppSession.TodoList.Add(newTodo);
-
-        await DisplayAlert("🚀 Added!", $"\"{title}\" added to your missions.", "OK");
-        await Navigation.PopAsync();
+    private void SetLoading(bool isLoading)
+    {
+        LoadingIndicator.IsRunning = isLoading;
+        LoadingIndicator.IsVisible = isLoading;
+        AddButton.IsEnabled        = !isLoading;
     }
 }

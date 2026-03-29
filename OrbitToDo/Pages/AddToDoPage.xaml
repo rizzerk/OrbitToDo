@@ -47,9 +47,16 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Add Button pinned to bottom -->
-        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,24">
+        <!-- Bottom: loading + Add button -->
+        <VerticalStackLayout Grid.Row="1" Padding="16,8,16,24" Spacing="6">
+            <ActivityIndicator
+                x:Name="LoadingIndicator"
+                IsRunning="False"
+                IsVisible="False"
+                Color="{StaticResource NebulaPurple}"
+                HorizontalOptions="Center"/>
             <Button
+                x:Name="AddButton"
                 Text="Add"
                 Style="{StaticResource PrimaryButton}"
                 Clicked="OnAddClicked"/>

@@ -319,3 +319,4 @@
 /Users/razelkayearenas/RiderProjects/OrbitToDo/OrbitToDo/obj/Debug/net10.0-ios/iossimulator-arm64/resizetizer/r/Resources/tab_todo.png
 /Users/razelkayearenas/RiderProjects/OrbitToDo/OrbitToDo/obj/Debug/net10.0-ios/iossimulator-arm64/resizetizer/r/Resources/tab_completed.png
 /Users/razelkayearenas/RiderProjects/OrbitToDo/OrbitToDo/obj/Debug/net10.0-ios/iossimulator-arm64/resizetizer/r/Resources/tab_profile.png
+/Users/razelkayearenas/RiderProjects/OrbitToDo/OrbitToDo/obj/Debug/net10.0-ios/iossimulator-arm64/OrbitToDo.sourcelink.json
